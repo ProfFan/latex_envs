@@ -5,10 +5,21 @@
 listOfFiles=$*
 #from http://stackoverflow.com/questions/59895/can-a-bash-script-tell-what-directory-its-stored-in
 SDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-echo $SDIR
 
-cp -n $SDIR/thmsInNb_article.tplx .  # for conversion, the template file must be in the same directory (or in templates/html dir)
-#cp -n $SDIR/thmsInNb_book.tplx .  # for conversion, the template file must be in the same directory (or in templates/html dir)
+stillIPython3=true #If one still uses iPython 3.x
+nbextensionsDIR=~/.local/share/jupyter/nbextensions
+jup_exe=jupyter
+
+if $stillIPython3  
+then
+	nbextensionsDIR=~/.ipython/nbextensions
+	jup_exe=ipython3
+fi
+
+conversionTemplate=thmsInNb_article.tplx #or thmsInNb_book.tplx
+
+
+cp -n $SDIR/$conversionTemplate ./template_tmp.tplx  # for conversion, the template file must be in the same directory (or in templates/html dir)
 for f in $listOfFiles
 do
 	temp=${f%.ipynb}_tmp.ipynb
@@ -17,16 +28,20 @@ do
 	perl -pi -e s/'\\\\\['/'\$\$'/ $temp
 	perl -pi -e s/'\\\\\]'/'\$\$'/ $temp
 	# convert ipynb to latex
-	ipython3 nbconvert --to latex --template thmsInNb_article $temp
-	#ipython nbconvert --to latex --template thmsInNb_book $temp
+	$jup_exe nbconvert --to latex --template template_tmp $temp
 
     ##  postprocessing
+
 	python3 $SDIR/thmInNb_tolatex.py ${temp%.ipynb}.tex ${f%.ipynb}.tex  #conversion of remaining environments
 	python3 $SDIR/texheaders_rm.py ${f%.ipynb}.tex	#remove headers and footers (optional -- can be commented) 
-    #python3 $SDIR/toc_and_cln.py ${f%.ipynb}.tex
+    #python3 $SDIR/toc_and_cln.py ${f%.ipynb}.tex   #remove the tableofcontents (as produced with calico-document-tools) and the References section
+
+	#don't knwow why but my last pandoc converts $ into \( or /). Correct this:
+      #perl -pi -e s/'\\\('/'\$'/g ${f%.ipynb}.tex
+      #perl -pi -e s/'\\\)'/'\$'/g ${f%.ipynb}.tex
     # want to number everything
-	perl -pi -e s/'\\\['/'\\begin{equation}'/ ${f%.ipynb}.tex
-	perl -pi -e s/'\\\]'/'\\end{equation}'/ ${f%.ipynb}.tex
+      #perl -pi -e s/'\\\['/'\\begin{equation}'/ ${f%.ipynb}.tex
+      #perl -pi -e s/'\\\]'/'\\end{equation}'/ ${f%.ipynb}.tex
 done
 echo Cleaning...
 rm *_tmp.*

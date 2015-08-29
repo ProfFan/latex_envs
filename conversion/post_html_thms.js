@@ -3,6 +3,12 @@
 // This applies the same substitutions 
 // that we use in the live notebook .
 
+var nbextensionsDir='/.local/share/jupyter/nbextensions' // for Jupyter, '/.ipython/nbextensions' for IPython
+var static_path = "/usr/share/ipython/notebook/static"; //for IPython 3.x on Debian
+// /usr/share/jupyter/notebook/static // probably for Jupyter (on Debian); 
+var marked = require( static_path + '/components/marked/lib/marked.js');
+
+
 
 // read the markdown from stdin
 var html_to_analyse='';
@@ -17,15 +23,18 @@ process.stdin.on("end", function () {
 var fs = require('fs');
 var IPython;
 
-var static_path = "/usr/share/ipython/notebook/static/";
-var marked = require( static_path + 'components/marked/lib/marked.js');
 
+//TODO It should be nice to read the value of these variables from the notebook's metada. As it should...
 var eqNum = 0; // begins equation numbering at eqNum+1
 var eqLabelWithNumbers = true; //if true, label equations with equation numbers; otherwise using the tag specified by \label
 var conversion_to_html = true;
+var current_cit=1;
+var cite_by='key';  //only number and key are supported
+var document={}
+document.bibliography={};
 
-// Read the actual conversion script file, located in $HOME/.ipython/nbextensions
-eval(fs.readFileSync( process.env['HOME'] + "/.ipython/nbextensions/thmsInNb.js", 'utf8') );
+// Read the actual conversion script file, located in $HOME/.../nbextensions
+eval(fs.readFileSync( process.env['HOME'] + nbextensionsDir +"/latex_envs/thmsInNb4.js", 'utf8') );
 
 
     //IPython.mathjaxutils.init();

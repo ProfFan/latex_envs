@@ -9,11 +9,17 @@ The environments are extracted recursively and translated. Then they are inserte
 def EnvReplace(message):
 	
     import re
-    from IPython.nbconvert.utils.pandoc import pandoc
+	#import pandoc
+    from IPython import version_info as version
+    if version[0]>3:
+        from nbconvert.utils.pandoc import pandoc
+    else:
+        from IPython.nbconvert.utils.pandoc import pandoc
     
     environmentMap = ['thm','lem', 'cor', 'prop','defn','rem','prob','excs','examp','theorem','lemma','corollary','proposition',
-            'definition','remark','problem', 'exercise', 'example','proof','property']
+            'definition','remark','problem', 'exercise', 'example','proof','property','itemize','enumerate']
 	# this map should match the map defined in .ipython/nbextensions/thmsInNb.js	
+	# do not include figure
 
     def replacement(a):
         
@@ -21,7 +27,9 @@ def EnvReplace(message):
         theenv=a.group(1)
         tobetranslated=a.group(2)
         if theenv in environmentMap:
+            tobetranslated=tobetranslated.replace(r'\item',r'/item') #pandoc does not translate lines beginning with \item 
             out=pandoc(tobetranslated, 'markdown', 'latex')
+            out=out.replace(r'/item',r'\item')
             result = '/begin{' + theenv + '}\n'+ out + '\n\end{' + theenv + '}';
         else:
             result = '/begin{' + theenv + '}'+ tobetranslated + '\end{' + theenv + '}';
@@ -42,14 +50,19 @@ def EnvReplace(message):
 	
 if __name__ == '__main__':
     # TEST
-    import sys
+    import sys, re
     infile=sys.argv[1]
     outfile=sys.argv[2]
     with open (sys.argv[1], "r") as infile:
        text=infile.read()
     text=text.replace("\\begin{document}","/begin{document}")   
     out=EnvReplace(text)
-    out=out.replace("/begin","\\begin")   
+    out=out.replace("/begin","\\begin") 
+    #don't knwow why but my last pandoc converts $ into \( or /). Correct this:  
+    out=re.sub(r'\\[\(\)]','$',out)
+    # want to number everything
+    out=re.sub(r'\\\[',r'\\begin{equation}',out)
+    out=re.sub(r'\\\]',r'\\end{equation}',out)
     with open (sys.argv[2], "w") as outfile:
        outfile.write("%Thms like environments translated from notebook using thmInNb_tolatex.py\n")        
        outfile.write(out)

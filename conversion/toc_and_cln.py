@@ -31,22 +31,23 @@ def texheaders_filtering(input_file):
     def remp(intext):
         #out=re.findall('\\\\[sub]?section',intext.group(0))
         out=re.findall('(\\\\[sub]?section|\\\\chapter)',intext.group(0))        
-
-        print(out) 
-        """"print(out.group(0))
-        return out.group(0) """ 
         return out[-1] 
  
-    #newtext=re.sub('section{Table of Contents}([\s\S]*?)\\[sub]?section{','Remplacement',text,flags=re.M)
-    newtext=re.sub('\\\\section{Table of Contents}([\s\S]*?)(\\\\[sub]?section|\\\\chapter)',remp,text,flags=re.M)
+    # Remove Table of Contents section
+    newtext=re.sub(r'\\section{Table of Contents}([\s\S]*?)(?=(?:\\[sub]?section|\\chapter))','',text,flags=re.M)
+    # Remove References section
+    newtext=re.sub(r'\\section{References}[\S\s]*?(?=(?:\\[sub]*section|\\chapter|\\end{document}|\Z))','',newtext,flags=re.M)
+
     newtext=re.sub('\\\\begin{verbatim}[\s]*?<matplotlib\.[\S ]*?>[\s]*?\\\\end{verbatim}','',newtext,flags=re.M)
     newtext=re.sub('\\\\begin{verbatim}[\s]*?<IPython\.core\.display[\S ]*?>[\s]*?\\\\end{verbatim}','',newtext,flags=re.M)
     
     #bottom page with links to Index/back/next (suppress this)
-#'----[\s]*?<div align=right> [Index](toc.ipynb)[\S ]*?.ipynb\)</div>'
+         #'----[\s]*?<div align=right> [Index](toc.ipynb)[\S ]*?.ipynb\)</div>'
     newtext=re.sub('\\\\begin{center}\\\\rule{3in}{0.4pt}\\\\end{center}[\s]*?\\\\href{toc.ipynb}{Index}[\S\s ]*?.ipynb}{Next}','',newtext,flags=re.M)
    
     
+    # Looks for figcaption in the text. Then for the included image with \adjustimage...Then extracts caption and label from the figcaption
+    # and redraws the figure using a figure environment and an \includegraphics
     # figcaption(text,label=)
     tofind="figcaption\(([\s\S]*?)\)\n([\s\S]*?)\\\\begin{center}\s*\\\\adjustimage[\s\S]*?}}{([\S]*?)}\s*\\\\end{center}"
    
