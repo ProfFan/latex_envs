@@ -22,7 +22,7 @@ IPython.utils.load_extensions('calico-document-tools');
     
     \begin{verbatim}
 <IPython.core.display.Javascript object>
-    \end{verbatim}
+\end{verbatim}
 
     % No prompt!
 %\textbf{Input \#{}}%
@@ -69,16 +69,13 @@ A simple illustration is as follows: on can type the following in a
 markdown cell
 
 \begin{listing}
-\begin{theorem}
-\label{theo:dotp} Let $u$ and $v$ be two vectors of
-$\mathbb{R}^n$. The dot product can be expressed as
-
+\begin{theorem} \label{theo:dotp}
+Let $u$ and $v$ be two vectors of $\mathbb{R}^n$. The dot product can be expressed as
 \begin{equation}
 \label{eq:dotp}
 u^Tv = |u||v| \cos \theta,
 \end{equation}
-
-where $\theta$ is the angle between $u$ and $v$ \ldots{}
+where $\theta$ is the angle between $u$ and $v$ ...
 \end{theorem}
 \end{listing}
 
@@ -158,10 +155,8 @@ done according to the stylesheet \texttt{latex\_env.css}, which of
 course, can be tailored to specific uses and tastes}.
 
 \begin{listing}
-\begin{definition}
-\label{def:FT} Let $x[n]$ be a sequence of length $N$. Then, its
-\textbf{Fourier transform} is given by
-
+\begin{definition} \label{def:FT}
+Let $x[n]$ be a sequence of length $N$. Then, its **Fourier transform** is given by
 \begin{equation}
 \label{eq:FT}
 X[k]= \frac{1}{N} \sum_{n=0}^{N-1} x[n] e^{-j2\pi \frac{kn}{N}}
@@ -319,7 +314,8 @@ enables to choose the type of reference calls. The Equations input box
 enable to initiate numbering of equations at the given number (this may
 be useful for complex documents in several files/parts). Finally the
 last drop-down menu let the user choose to number equation or to display
-their label instead.
+their label instead. These configuration options are then stored in the
+notebook's metadata (and restored on reload).
 
     \section{Installation, usage and further
 examples}\label{installation-usage-and-further-examples}
@@ -334,14 +330,14 @@ With Jupyter, you may also simply install the extension with
 \begin{Shaded}
 \begin{Highlighting}[]
 \CharTok{from} \NormalTok{notebook.nbextensions }\CharTok{import} \NormalTok{install_nbextension, check_nbextension}
-\NormalTok{install_nbextension(}\StringTok{"https://rawgit.com/jfbercher/latex_envs/latex_envs.zip"}\NormalTok{, user=}\OtherTok{True}\NormalTok{)}
+\NormalTok{install_nbextension(}\StringTok{"https://rawgit.com/jfbercher/latex_envs/master/latex_envs.zip"}\NormalTok{, user=}\OtherTok{True}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
     An even more simple procedure is to issue
 
 \begin{verbatim}
-jupyter nbextension install https://rawgit.com/jfbercher/latex_envs/latex_envs.zip  --user
+jupyter nbextension install https://rawgit.com/jfbercher/latex_envs/master/latex_envs.zip  --user
 \end{verbatim}
 
 at the command line.
@@ -351,12 +347,11 @@ at the command line.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CharTok{from} \NormalTok{IPython.html.nbextensions }\CharTok{import} \NormalTok{install_nbextension, check_nbextension}
-\NormalTok{install_nbextension(}\StringTok{"https://rawgit.com/jfbercher/latex_envs/latex_envs.zip"}\NormalTok{, user=}\OtherTok{True}\NormalTok{)}
+\NormalTok{install_nbextension(}\StringTok{"https://rawgit.com/jfbercher/latex_envs/master/latex_envs.zip"}\NormalTok{, user=}\OtherTok{True}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
-    You may then try the extension by loading it typing in a code cell of
-the notebook
+    You may then try the extension. Load it by typing
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -364,6 +359,8 @@ the notebook
 \NormalTok{require(}\StringTok{"base/js/utils"}\NormalTok{).load_extensions(}\StringTok{"latex_envs/latex_envs"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
+
+in a code cell of the notebook.
 
     If you want to automatically load the extension for any notebook, you
 may use
@@ -373,7 +370,7 @@ may use
 \CharTok{from} \NormalTok{IPython.html.services.config }\CharTok{import} \NormalTok{ConfigManager}
 \NormalTok{ip = get_ipython()}
 \NormalTok{cm = ConfigManager(parent=ip, profile_dir=ip.profile_dir.location)}
-\NormalTok{cm.update(}\StringTok{'notebook'}\NormalTok{, \{}\StringTok{"load_extensions"}\NormalTok{: \{}\StringTok{"latex_envs/latex_envs_jup"}\NormalTok{: }\OtherTok{True}\NormalTok{\}\})}
+\NormalTok{cm.update(}\StringTok{'notebook'}\NormalTok{, \{}\StringTok{"load_extensions"}\NormalTok{: \{}\StringTok{"latex_envs/latex_envs"}\NormalTok{: }\OtherTok{True}\NormalTok{\}\})}
 \end{Highlighting}
 \end{Shaded}
 
@@ -385,7 +382,7 @@ Alternatively you may also do this in javascript via
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{%%javascript}
-\NormalTok{IPython.notebook.config.update(\{}\StringTok{"load_extensions"}\NormalTok{:\{}\StringTok{"latex_envs/latex_envs_jup"}\NormalTok{:true\}\})}
+\NormalTok{IPython.notebook.config.update(\{}\StringTok{"load_extensions"}\NormalTok{:\{}\StringTok{"latex_envs/latex_envs"}\NormalTok{:true\}\})}
 \end{Highlighting}
 \end{Shaded}
 
@@ -443,8 +440,8 @@ _=plt.xlabel("Frequency index (k)")
 %\textbf{Output \#{}}
 %
     \begin{center}
-    \adjustimage{max size={0.6\linewidth}{0.6\paperheight}}{latex_env_doc-ltx_tmp_files/latex_env_doc-ltx_tmp_46_0.png}
-    \end{center}
+\adjustimage{max size={0.6\linewidth}{0.6\paperheight}}{latex_env_doc-ltx_tmp_files/latex_env_doc-ltx_tmp_46_0.png}
+\end{center}
 %    { \hspace*{\fill} \\}
     
     \subsection{Second example}\label{second-example}
@@ -456,45 +453,39 @@ environments}. Again, the rendering is done according to the stylesheet
 environments below is typed using the environment \emph{listing}\ldots{}
 
     \begin{listing}
-\begin{definition}
-\label{def:diffeq} We call \textbf{difference equation} an equation of
-the form \begin{equation}
+\begin{definition} \label{def:diffeq}
+We call \textbf{difference equation} an equation of the form
+$$
 \label{eq:diffeq}
 y[n]= \sum_{k=1}^{p} a_k y[n-k] + \sum_{i=0}^q b_i x[n-i]
-\end{equation}
+$$
 \end{definition}
 
 \begin{property}
-If all the $a_k$ in equation (\ref{eq:diffeq}) of definition
-\ref{def:diffeq} are zero, then the filter has a \textbf{finite impulse
-response}.
+If all the $a_k$ in equation (\ref{eq:diffeq}) of definition \ref{def:diffeq} are zero, then the filter has a **finite impulse response**. 
 \end{property}
 
 \begin{proof}
-Let $\delta[n]$ denote the Dirac impulse. Take $x[n]=\delta[n]$ in
-(\ref{eq:diffeq}). This yields, by definition, the impulse response: \begin{equation}
+Let $\delta[n]$ denote the Dirac impulse. Take $x[n]=\delta[n]$ in (\ref{eq:diffeq}). This yields, by definition, the impulse response:
+$$
 \label{eq:fir}
 h[n]= \sum_{i=0}^q b_i \delta[n-i],
-\end{equation} which has finite support.
+$$
+which has finite support. 
 \end{proof}
 
 \begin{theorem}
-The poles of a causal stable filter are located within the unit circle
-in the complex plane.
+The poles of a causal stable filter are located within the unit circle in the complex plane.
 \end{theorem}
 
-\begin{example}
-\label{ex:IIR1} Consider $y[n]= a y[n-1] + x[n]$. The pole of the
-transfer function is $z=a$. The impulse response $h[n]=a^n$ has
-infinite support.
+\begin{example} \label{ex:IIR1}
+Consider $y[n]= a y[n-1] +  x[n]$. The pole of the transfer function is $z=a$. The impulse response $h[n]=a^n$ has infinite support.
 \end{example}
 
 In the following exercise, you will check that the filter is stable iff $a$<1.
 
-\begin{exercise}
-\label{ex:exofilter} Consider the filter defined in Example
-\ref{ex:IIR1}. Using the \textbf{function} \texttt{lfilter} of scipy,
-compute and plot the impulse response for several values of $a$.
+\begin{exercise}\label{ex:exofilter}
+Consider the filter defined in Example \ref{ex:IIR1}. Using the **function** `lfilter` of scipy, compute and plot the impulse response for several values of $a$.
 \end{exercise}
 
 \end{listing}
@@ -578,8 +569,8 @@ _=plt.legend()
 %\textbf{Output \#{}}
 %
     \begin{center}
-    \adjustimage{max size={0.6\linewidth}{0.6\paperheight}}{latex_env_doc-ltx_tmp_files/latex_env_doc-ltx_tmp_52_0.png}
-    \end{center}
+\adjustimage{max size={0.6\linewidth}{0.6\paperheight}}{latex_env_doc-ltx_tmp_files/latex_env_doc-ltx_tmp_52_0.png}
+\end{center}
 %    { \hspace*{\fill} \\}
     
     \subsection{Third example:}\label{third-example}
@@ -593,25 +584,19 @@ TeX file. Following the same idea, text formating commands
     \begin{listing}
 The following \textit{environments} are available:
 \begin{itemize}
-\begin{verbatim}
-\item \textbf{Theorems and likes}
-\begin{enumerate}
-\begin{verbatim}
-\item theorem,
-\item lemma,
-\item corollary
-\item ...
-\end{verbatim}
-\end{enumerate}
-\item \textbf{exercises}
-\begin{enumerate}
-\begin{verbatim}
-\item problem,
-\item example,
-\item exercise
-\end{verbatim}
-\end{enumerate}
-\end{verbatim}
+    \item \textbf{Theorems and likes}
+    \begin{enumerate}
+        \item theorem,
+        \item lemma,
+        \item corollary
+        \item ...
+    \end{enumerate}
+    \item \textbf{exercises}
+    \begin{enumerate}
+        \item problem,
+        \item example,
+        \item exercise
+    \end{enumerate}
 \end{itemize}
 \end{listing}
 
@@ -620,11 +605,17 @@ The following \textit{environments} are available:
 The following \textit{environments} are available:
 
 \begin{itemize}
-\item \textbf{Theorems and likes} \textbackslash{}begin\{enumerate\}
+\item \textbf{Theorems and likes}
+
+\begin{enumerate}
 \item theorem, \item lemma, \item corollary \item \ldots{}
-\textbackslash{}end\{enumerate\} \item \textbf{exercises}
-\textbackslash{}begin\{enumerate\} \item problem, \item example, \item
-exercise \textbackslash{}end\{enumerate\}
+\end{enumerate}
+
+\item \textbf{exercises}
+
+\begin{enumerate}
+\item problem, \item example, \item exercise
+\end{enumerate}
 \end{itemize}
 
     \section{(post)-Converters}\label{post-converters}
@@ -677,13 +668,13 @@ system in \texttt{post\_html\_thms.js}.
 The conversion to html is done by something like
 
 \begin{verbatim}
-    [path/]ipynb_thms_to_html filename
+[path/]ipynb_thms_to_html filename
 \end{verbatim}
 
 or a list of files such as
 
 \begin{verbatim}
-    [path/]ipynb_thms_to_html *.ipynb
+[path/]ipynb_thms_to_html *.ipynb
 \end{verbatim}
 
 In turn, this script makes somes substitutions using \texttt{perl}, and
@@ -702,14 +693,14 @@ the case of web upload).
 The conversion to LaTeX is done by something like
 
 \begin{verbatim}
-    [path/]ipynb_thms_to_latex filename
+[path/]ipynb_thms_to_latex filename
 \end{verbatim}
 
 or a list of files such as
 
 \begin{verbatim}
-    [path/]ipynb_thms_to_latex *.ipynb
-    
+[path/]ipynb_thms_to_latex *.ipynb
+
 \end{verbatim}
 
 The script makes some substitutions and cleaning in markdown cells, then
@@ -758,6 +749,22 @@ Originally, I used a piece of code from the nice online markdown editor
 also considered the problem of incorporating LaTeX markup in their
 markdown. I also used examples and code from
 \url{https://github.com/ipython-contrib/IPython-notebook-extensions}.
+
+    \section{References}\label{references}
+
+(P'erez and Granger, 2007) P'erez Fernando and Granger Brian E.,
+``\emph{IPython: a System for Interactive Scientific Computing}'',
+Computing in Science and Engineering, vol.~9, number 3, pp.~21--29, May
+2007. \href{http://ipython.org}{online}
+
+(McKinney, 2012) Wes McKinney, ``\emph{Python for data analysis: Data
+wrangling with Pandas, NumPy, and IPython}'', 2012.
+
+(Rossant, 2013) Cyrille Rossant, ``\emph{Learning IPython for
+interactive computing and data visualization}'', 2013.
+
+(Shen, 2014) Shen Helen, ``\emph{Interactive notebooks: Sharing the
+code}'', Nature, vol.~515, number 7525, pp.~151--152, 2014.
 
 
     % Add a bibliography block to the postdoc

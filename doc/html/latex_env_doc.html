@@ -632,7 +632,7 @@ Figure <a class="latex_ref" href="#figexample">[fig:example]</a> shows a second 
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The configuration toolbar  <img src="configuration_toolbar.png" alt="configuration toolbar"> enables to enter some configuration options for the extension. First, one can indicate the name of the bibtex file. If this file is not found and the user creates the reference section, then this section will indicate that the file was not found. The references drop-down menu enables to choose the type of reference calls. The Equations input box enable to initiate numbering of equations at the given number (this may be useful for complex documents in several files/parts). Finally the last drop-down menu let the user choose to number equation or to display their label instead.</p>
+<p>The configuration toolbar  <img src="configuration_toolbar.png" alt="configuration toolbar"> enables to enter some configuration options for the extension. First, one can indicate the name of the bibtex file. If this file is not found and the user creates the reference section, then this section will indicate that the file was not found. The references drop-down menu enables to choose the type of reference calls. The Equations input box enable to initiate numbering of equations at the given number (this may be useful for complex documents in several files/parts). Finally the last drop-down menu let the user choose to number equation or to display their label instead. These configuration options are then stored in the notebook's metadata (and restored on reload).</p>
 
 </div>
 </div>
@@ -660,10 +660,10 @@ Figure <a class="latex_ref" href="#figexample">[fig:example]</a> shows a second 
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The extension consists in several javascript scripts: <code>latex_envs.js</code>, <code>thmsInNb4.js</code>, <code>bibInNb4.js</code> and <code>initNb.js</code>,  together with a stylesheet <code>latex_envs.css</code>. 
-With Jupyter, you may also simply install the extension with</p>
+<p>The extension consists in several javascript scripts: <code>latex_envs.js</code>, <code>thmsInNb4.js</code>, <code>bibInNb4.js</code> and <code>initNb.js</code>,  together with a stylesheet <code>latex_envs.css</code>. You may follow the instructions in the <a href="https://github.com/ipython-contrib/IPython-notebook-extensions/wiki">wiki</a> to install the extension.</p>
+<p>With Jupyter, you may also simply install the extension from the initial repository with</p>
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">notebook.nbextensions</span> <span class="kn">import</span> <span class="n">install_nbextension</span><span class="p">,</span> <span class="n">check_nbextension</span>
-<span class="n">install_nbextension</span><span class="p">(</span><span class="s">&quot;https://rawgit.com/jfbercher/latex_envs/latex_envs.zip&quot;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">install_nbextension</span><span class="p">(</span><span class="s">&quot;https://rawgit.com/jfbercher/latex_envs/master/latex_envs.zip&quot;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -674,9 +674,9 @@ With Jupyter, you may also simply install the extension with</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>An even more simple procedure is to issue</p>
+<p>An even simpler procedure is to issue</p>
 
-<pre><code>jupyter nbextension install https://rawgit.com/jfbercher/latex_envs/latex_envs.zip  --user</code></pre>
+<pre><code>jupyter nbextension install https://rawgit.com/jfbercher/latex_envs/master/latex_envs.zip  --user</code></pre>
 <p>at the command line.</p>
 
 </div>
@@ -689,7 +689,7 @@ With Jupyter, you may also simply install the extension with</p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>If you are still with IPython 3, you can install with</p>
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">IPython.html.nbextensions</span> <span class="kn">import</span> <span class="n">install_nbextension</span><span class="p">,</span> <span class="n">check_nbextension</span>
-<span class="n">install_nbextension</span><span class="p">(</span><span class="s">&quot;https://rawgit.com/jfbercher/latex_envs/latex_envs.zip&quot;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">install_nbextension</span><span class="p">(</span><span class="s">&quot;https://rawgit.com/jfbercher/latex_envs/master/latex_envs.zip&quot;</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -700,10 +700,11 @@ With Jupyter, you may also simply install the extension with</p>
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>You may then try the extension by loading it typing in a code cell of the notebook</p>
+<p>You may then try the extension. You can load it by typing</p>
 <div class="highlight"><pre><span class="o">%%</span><span class="n">javascript</span>
 <span class="n">require</span><span class="p">(</span><span class="s">&quot;base/js/utils&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">load_extensions</span><span class="p">(</span><span class="s">&quot;latex_envs/latex_envs&quot;</span><span class="p">)</span>
 </pre></div>
+<p>in a code cell.</p>
 
 </div>
 </div>
@@ -717,7 +718,7 @@ With Jupyter, you may also simply install the extension with</p>
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">IPython.html.services.config</span> <span class="kn">import</span> <span class="n">ConfigManager</span>
 <span class="n">ip</span> <span class="o">=</span> <span class="n">get_ipython</span><span class="p">()</span>
 <span class="n">cm</span> <span class="o">=</span> <span class="n">ConfigManager</span><span class="p">(</span><span class="n">parent</span><span class="o">=</span><span class="n">ip</span><span class="p">,</span> <span class="n">profile_dir</span><span class="o">=</span><span class="n">ip</span><span class="o">.</span><span class="n">profile_dir</span><span class="o">.</span><span class="n">location</span><span class="p">)</span>
-<span class="n">cm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s">&#39;notebook&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;load_extensions&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;latex_envs/latex_envs_jup&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}})</span>
+<span class="n">cm</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s">&#39;notebook&#39;</span><span class="p">,</span> <span class="p">{</span><span class="s">&quot;load_extensions&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;latex_envs/latex_envs&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}})</span>
 </pre></div>
 
 </div>
@@ -731,7 +732,7 @@ With Jupyter, you may also simply install the extension with</p>
 <p>and replace the <code>True</code> by `None if you want to unload the extension.</p>
 <p>Alternatively you may also do this in javascript via</p>
 <div class="highlight"><pre><span class="o">%%</span><span class="n">javascript</span>
-<span class="n">IPython</span><span class="o">.</span><span class="n">notebook</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">&quot;load_extensions&quot;</span><span class="p">:{</span><span class="s">&quot;latex_envs/latex_envs_jup&quot;</span><span class="p">:</span><span class="n">true</span><span class="p">}})</span>
+<span class="n">IPython</span><span class="o">.</span><span class="n">notebook</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s">&quot;load_extensions&quot;</span><span class="p">:{</span><span class="s">&quot;latex_envs/latex_envs&quot;</span><span class="p">:</span><span class="n">true</span><span class="p">}})</span>
 </pre></div>
 
 </div>
@@ -756,16 +757,6 @@ With Jupyter, you may also simply install the extension with</p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>and <code>disable</code> to disable it, of course.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>You may follow the instructions in the <a href="https://github.com/ipython-contrib/IPython-notebook-extensions/wiki">wiki</a> to install the extension.</p>
 
 </div>
 </div>
@@ -1563,7 +1554,7 @@ The following \textit{environments} are available:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The scripts are located in the conversion subdirectory. Copy the scripts to a directory in your search path, or launch the scripts with the complete path. The two main scripts are <code>ipynb_thms_to_html</code> (conversion to html, of course:) and <code>ipynb_thms_to_latex</code>  (conversion to LaTeX!).</p>
+<p>The scripts are located in the conversion subdirectory. Copy the scripts to a directory in your search path, or launch the scripts with the complete path. The two main scripts are <code>ipynb_thms_to_html</code> (conversion to html, of course:) and <code>ipynb_thms_to_latex</code>  (conversion to LaTeX!). You may need to change the permissions of these two files, eg <code>chmod 755 ipynb_thms_to_*</code>.</p>
 
 </div>
 </div>

@@ -21,3 +21,4 @@
 \contentsline {subsection}{\numberline {3.2}Conversion to html}{11}{subsection.3.2}
 \contentsline {subsection}{\numberline {3.3}Conversion to LaTeX}{12}{subsection.3.3}
 \contentsline {section}{\numberline {4}Disclaimer, sources and thanks}{12}{section.4}
+\contentsline {section}{\numberline {5}References}{12}{section.5}
