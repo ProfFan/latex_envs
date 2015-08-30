@@ -2,7 +2,6 @@
 """
 @author: bercherj
 The content of selected environments is translated from markdown to latex, via pandoc
-The environments are extracted recursively and translated. Then they are inserted back into the tex file. 
 """
 
 #****************************************************************************
@@ -17,21 +16,23 @@ def EnvReplace(message):
         from IPython.nbconvert.utils.pandoc import pandoc
     
     environmentMap = ['thm','lem', 'cor', 'prop','defn','rem','prob','excs','examp','theorem','lemma','corollary','proposition',
-            'definition','remark','problem', 'exercise', 'example','proof','property','itemize','enumerate']
+            'definition','remark','problem', 'exercise', 'example','proof','property','itemize','enumerate','theo','enum']
 	# this map should match the map defined in .ipython/nbextensions/thmsInNb.js	
 	# do not include figure
 
     def replacement(a):
-        
+        import textwrap
         w=a.group(0)            
         theenv=a.group(1)
         tobetranslated=a.group(2)
+        tobetranslated=textwrap.dedent(tobetranslated)
         if theenv in environmentMap:
             tobetranslated=tobetranslated.replace(r'\item',r'/item') #pandoc does not translate lines beginning with \item 
             out=pandoc(tobetranslated, 'markdown', 'latex')
             out=out.replace(r'/item',r'\item')
             result = '/begin{' + theenv + '}\n'+ out + '\n\end{' + theenv + '}';
         else:
+            tobetranslated=tobetranslated.replace('\\begin','/begin') 
             result = '/begin{' + theenv + '}'+ tobetranslated + '\end{' + theenv + '}';
         #the transform \begin --> /begin is done in order to avoid the group to match again
         
@@ -40,9 +41,11 @@ def EnvReplace(message):
     
     code="Init"
     data=message
+    data=data.replace(r"{enumerate}",r"{enum}")
     while (code!=None):   
-        code=re.search(r'\\begin{(\w+)}([\s\S]*?)\\end{\1}', data)         
+        code=re.search(r'\\begin{(\w+)}([\s\S]*?)\\end{\1}', data)        
         data=re.sub(r'\\begin{(\w+)}([\s\S]*?)\\end{\1}', replacement, data)
+    data=data.replace(r"{enum}",r"{enumerate}")
     return data
         
 
