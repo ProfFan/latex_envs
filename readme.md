@@ -1,51 +1,59 @@
 # (some) LaTeX environments for Jupyter notebook
 
-This extension enables to use some LaTeX structures directly in markdown cells of the notebook. Supported structures include
+This extension for IPython 3.x or Jupyter enables to use some LaTeX commands and environments in the notebook's markdown cells. 
 
-- theorems like structures: theorem, lemma, corollary, definition, example, problem, ...
-- itemize, enumerate, ...
+1. **LaTeX commands and environments**
+ - support for some LaTeX commands within markdown cells, *e.g.* `\textit`, `\textbf`, `\underline`
+ -  support for **theorems-like environments**
+ -  support for **lists**: *enumerate, itemize*,  
+ -  limited support for a **figure environment**,
+ -  support for an environment *listing*,
+ -  additional *textboxa* environment
+2. **Citations and bibliography**
+ -  support for `\cite` with creation of a References section, rendering of references can be customized (to some extent)
+3. **Document-wide numbering of equations, support for `\label` and `\ref`**
+4. **Configuration toolbar**
+5. Styles can be customized in the *latex\_env.css* stylesheet
 
-More environments can be simply added in the source file (`thsInNb.js`). 
-
-An automatic numbering of environments is implemented. Labels, cross-references and links between environments and equations are supported.
-
-In addition, the extension also enables to use simple LaTeX markup such as \textit{}, \textbf{}, \textem{}, \underline{}, etc. 
-This is useful for copying snippets of text to/from a LaTeX file. 
-The rendering of the LaTeX structures (theorems, definitions, exercises..) can be tailored via the stylesheet `latex_envs.css`
+More environments can be simply added in the source file (`thmsInNb4.js`). 
 
 The `conversion` directory contains scripts for converting the notebooks to html and LaTeX while taking into account the structures 
-enabled by the extension. Theses scripts require nodejs, perl, ipython3. 
+enabled by the extension. Theses scripts require nodejs, perl, ipython3. Examples of such conversions are in the `doc` subdirectory that constains an example notebook and its html and pdf versions. This serves as the documentation.
 
-# Installation
-
-You should follow the instructions in the wiki. A manual installation consists in copying latex_envs.js, thmsInNb.js, latex_envs.css to 
-the notebook extension directory, usually ~/.ipython/nbextensions.   
-Copy the scripts in conversion/ to some directory (preferably in your path).
-Either load the extension from your `custom.js` or use a code cell with
-
-
-	%%javascript
-	IPython.load_extensions('latex_envs'); 
-	
 
 # Demo/documentation 
 
-A demo notebook `latex_env_doc.ipynb` is provided. Its html version is [latex_env_doc.html](https://rawgit.com/jfbercher/IPython-notebook-extensions/master/testing/latex_envs/latex_env_doc.html) and a pdf resulting 
-from conversion to LaTeX is available as `documentation.pdf`. Code needs improvements. 
-**Contributions, comments, issues are most welcome and will be deeply appreciated.**
-
-The original idea and starting code come from a discussion here: [https://github.com/benweet/stackedit/issues/187](https://github.com/benweet/stackedit/issues/187).
+A demo notebook `latex_env_doc.ipynb` is provided. Its html version is [latex_env_doc.html](https://rawgit.com/jfbercher/latex_envs/master/doc/latex_env_doc.html) and a pdf resulting 
+from conversion to LaTeX is available as [documentation](https://rawgit.com/jfbercher/latex_envs/master/doc/latex_env_doc.html). 
 
 
-## Files 
+# Installation
 
-File 			| description
------------------------ | -----------------------------
-conversion		|	Directory containing utilitary files for converting the notebook to html/LaTeX
-documentation.pdf	|	Documentation
-latex_env_doc.html	|	Documentation and demo notebook (html) version
-latex_env_doc.ipynb	|	Documentation and demo notebook
-latex_envs.css		|	Stylesheet for rendering the notebook/html
-latex_envs.js		|	LaTeX_envs extension (main script)
-thmsInNb.js		|	LaTeX_envs extension (does the actual conversion)
-readme.md		|	This file.
+You should follow the instructions in the wiki. 
+- Manual installation: Clone the repository and then copy the files to  
+the notebook extension directory, usually ~/.local/share/jupyter/nebextensions (Jupyter) or ~/.ipython/nbextensions (IPython 3.x).   
+Copy the scripts in conversion/ to some directory (preferably in your path).
+- Automated installation
+An even more simple procedure is to issue
+```
+jupyter nbextension install https://rawgit.com/jfbercher/latex_envs/master/latex_envs.zip  --user
+
+```
+at the command line.
+Either load the extension from your `custom.js` or use a code cell with
+
+	%%javascript
+	require("base/js/utils").load_extensions("latex_envs/latex_envs")
+
+You can automatically load the extension via
+	jupyter nbextension enable latex_envs/latex_envs	
+
+# Disclaimer, sources and acknowledgments
+
+Code certainly needs improvements. **Contributions, comments, issues are most welcome and will be deeply appreciated.**
+
+The original idea and starting code come from a discussion here: [https://github.com/benweet/stackedit/issues/187](https://github.com/benweet/stackedit/issues/187). Examples and code from [https://github.com/ipython-contrib/IPython-notebook-extensions](https://github.com/ipython-contrib/IPython-notebook-extensions) were also used. The bibliography part was inspired by the nice extension  [icalico-document-tools](https://bitbucket.org/ipre/calico/downloads/).
+
+
+
+

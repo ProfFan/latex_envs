@@ -189,4 +189,4 @@ define(["require",
 }); //End of run_this
 
 //run_this();
-console.log("Loading ./latex_envs_jup.js");
+console.log("Loading ./latex_envs.js");
