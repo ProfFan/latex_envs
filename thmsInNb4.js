@@ -88,6 +88,14 @@ function thmsInNbConv(marked,text) {
             { //****************************************************************************
                 var EnvReplace = function(message) {
                     //console.log(message);
+                    //restore incorrect replacements done during mathjaxutils.remove_math(text); [MarkdownCell.prototype.render]
+                    //var message = message.replace(/&lt;div([\S\s]*)&lt;\/div&gt;/gm,
+                    var message = message.replace(/&lt;(div|span)[\S\s]*&lt;\/(\1)&gt;/gm,
+                        function(wholeMatch,m1,m2) {
+                            wholeMatch = wholeMatch.replace(/&lt;/gm,'<');
+                            wholeMatch = wholeMatch.replace(/&gt;/gm,'>');
+                            return wholeMatch
+                        })
 
                     //Look for pairs [ ]
                     var message = message.replace(/^(?:<p>)?\[([\s\S]*?)^(?:<p>)?\]/gm,
@@ -109,7 +117,8 @@ function thmsInNbConv(marked,text) {
                     );
 
                     
-                    var out = message.replace(/\\begin{(\w+)}([\s\S]*?)\\end{\1}/gm, function(wholeMatch, m1, m2) {
+                    //var out = message.replace(/\\begin{(\w+)}([\s\S]*?)\\end{\1}/gm, function(wholeMatch, m1, m2) {
+                    var out = message.replace(/\\begin{(\w+)}([\s\S]*)\\end{\1}/gm, function(wholeMatch, m1, m2) {
 
 
                         //if(!environmentMap[m1]) return wholeMatch;
@@ -129,6 +138,7 @@ function thmsInNbConv(marked,text) {
                         // Try to check if there is remaining Markdown
                         // |\n\s-[\s]*(\w+)/gm
                         // /\*{1,2}([\s\S]*?)\*{1,2}|\_{1,2}([\s\S]*?)\_{1,2}/gm)
+                        
                         if (m2.match(/\*{1,2}([\s\S]*?)\*{1,2}|\_{1,2}([\S]*?)\_{1,2}|```/gm)) {
                             var m2 = marked.parser(marked.lexer(m2));
                         }
