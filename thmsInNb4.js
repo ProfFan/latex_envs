@@ -118,7 +118,7 @@ function thmsInNbConv(marked,text) {
 
                     
                     //var out = message.replace(/\\begin{(\w+)}([\s\S]*?)\\end{\1}/gm, function(wholeMatch, m1, m2) {
-                    var out = message.replace(/\\begin{(\w+)}([\s\S]*)\\end{\1}/gm, function(wholeMatch, m1, m2) {
+                    var out = message.replace(/\\begin{(\w+)}([\s\S]*?)\\end{\1}/gm, function(wholeMatch, m1, m2) {
 
 
                         //if(!environmentMap[m1]) return wholeMatch;
