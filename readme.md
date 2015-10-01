@@ -46,6 +46,7 @@ Either load the extension from your `custom.js` or use a code cell with
 	require("base/js/utils").load_extensions("latex_envs/latex_envs")
 
 You can automatically load the extension via
+
 	jupyter nbextension enable latex_envs/latex_envs	
 
 # Disclaimer, sources and acknowledgments
